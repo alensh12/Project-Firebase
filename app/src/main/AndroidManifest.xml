@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.amprime.firebaseauth">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/fb_main_launcher"
+        android:roundIcon="@mipmap/fb_main_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ChooserActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".GoogleSignActivity"
+            android:label="@string/google_sign" />
+        <activity
+            android:name=".EmailAndPasswordActivity"
+            android:label="Firebase"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ProfileInformationActivity"
+            android:label="Profile Info"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegistrationUserActivity"
+            android:label="@string/title_activity_registration"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListUser"
+            android:label="Registered Users"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChangePassword"
+            android:label="Change Password" />
+        <!-- <activity android:name=".RegistrationAdminActivity"> -->
+
+
+        <!-- </activity> -->
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:label="Reset"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ActivityPushNotificationConsole" />
+
+        <service android:name=".Services.FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".FireBaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

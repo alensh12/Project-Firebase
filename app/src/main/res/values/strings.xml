@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Project FireBase</string>
+    <string name="auth_failed">Authentication Failed</string>
+    <string name="email_and_password_sign_in">Use an email and password to authenticate with Firebase.</string>
+    <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
+    <string name="google_sign">Firebase + Google</string>
+    <string name="firebase_google"><![CDATA[Firebase & Google]]></string>
+    <string name="sign_out">Sign out</string>
+
+    <string name="disconnect">Disconnect</string>
+    <string name="username_hint">Username</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="log_out">Log Out</string>
+    <string name="signed_in_as_user">Signed in as user</string>
+    <string name="address">Address</string>
+    <string name="name">Name</string>
+    <string name="save">Save</string>
+    <string name="title_activity_registration">Fill Up Form</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Username/Email</string>
+    <string name="prompt_password">Password </string>
+    <string name="prompt_action_ok">Ok</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is invalid</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="first_name">FirstName</string>
+    <string name="re_password">Re-password</string>
+    <string name="register_as_user">Register </string>
+    <string name="register_as_admin">Register as Admin</string>
+    <string name="prompt_re_password">Re-Password</string>
+    <string name="prompt_registration_name">Full Name</string>
+    <string name="prompt_registration_address">Address</string>
+    <string name="prompt_registration_age">Age</string>
+    <string name="prompt_registration_country">Country</string>
+    <string name="password_verification">Not matched</string>
+    <string name="validate_age">Age above 18 and below 50</string>
+    <string name="forgot_password_reset_it">Forgot password? Reset it.</string>
+
+    <string-array name="Gender">
+        <item name="male">Male</item>
+        <item name="female">Female</item>
+    </string-array>
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="push_notification_message">Message</string>
+    <string name="push_notification_title">Title</string>
+</resources>

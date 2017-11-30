@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+ <item android:title="Log out"
+     app:showAsAction="never"
+     android:id="@+id/log_out_profile">
+
+ </item>
+    <item android:title="Change Password"
+        app:showAsAction="never"
+        android:id="@+id/change_password">
+
+    </item>
+
+    <item
+        android:id="@+id/list_of_users"
+        app:showAsAction="never"
+        android:title="Users List">
+
+    </item>
+    <item android:title="Edit Information"
+        app:showAsAction="never"
+        android:id="@+id/edit_user_information">
+
+
+    </item>
+
+
+</menu>
