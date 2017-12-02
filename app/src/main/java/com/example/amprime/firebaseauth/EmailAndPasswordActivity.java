@@ -3,6 +3,7 @@ package com.example.amprime.firebaseauth;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
@@ -71,6 +72,24 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
 
 
     }
+
+    @Override
+    protected void onResume() {
+        Log.d("TAG","here");
+
+        SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
+
+
+        boolean isLogin = preferences.getBoolean("islogin",false);
+        Log.d("login", String.valueOf(isLogin));
+        if(isLogin){
+            startActivity(new Intent(getApplicationContext(), ProfileInformationActivity.class));
+        }
+       
+
+     super.onResume();
+    }
+
     private void viewsAndButton() {
         usernameText = findViewById(R.id.userField);
         passwordText = findViewById(R.id.passwordField);
@@ -85,8 +104,10 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
         forgotPasswordText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                         Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
                         startActivity(intent);
+
             }
         });
 
@@ -108,7 +129,9 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v) {
     if(v == SignInButton){
+
         existingAccount();
+
     }
 
     if(v == RegisterUserButton){
@@ -127,7 +150,8 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
     private void existingAccount() {
         final String email = usernameText.getText().toString().trim();
         final String password = passwordText.getText().toString().trim();
-
+        progressDialog.setMessage("Logging in");
+        progressDialog.show();
         try {
             if (TextUtils.isEmpty(email)) {
                // Toast.makeText(this, "username empty", Toast.LENGTH_SHORT).show();
@@ -144,11 +168,14 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
                                 if (task.isSuccessful()) {
                                     SignInSignOut.setText("Successfully Signed In");
                                     SignInSignOut.setTextColor(Color.GREEN);
-                                    progressDialog.setMessage("Logging in");
-                                    progressDialog.show();
+
                                     startActivity(new Intent(getApplicationContext(), ProfileInformationActivity.class));
                                     finish();
                                     FirebaseUser user = mAuth.getCurrentUser();
+                                    SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putBoolean("islogin",true);
+                                    editor.commit();
                                     Log.d("TAG", "user_email " + user.getEmail());
                                     Log.d("TAG", "signInWithEmail:onComplete:" + task.isSuccessful());
                                 } else if(!(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected())){

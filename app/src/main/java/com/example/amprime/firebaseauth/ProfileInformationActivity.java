@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,8 +78,7 @@ public class ProfileInformationActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_profile_information);
 
         mProcessDialog = new ProgressDialog(this);
-        mProcessDialog.setMessage("Loading...");
-        mProcessDialog.show();
+
         usernameField = findViewById(R.id.username_field);
         emailIdField = findViewById(R.id.email_id_field);
         addressField = findViewById(R.id.address_field);
@@ -113,16 +113,12 @@ public class ProfileInformationActivity extends AppCompatActivity  {
 
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
+//                mProcessDialog.setMessage("Loading...");
+//                mProcessDialog.show();
+                Log.d("TAg", "CurrentUser: " + auth.getCurrentUser());
                 if (auth.getCurrentUser() != null) {
                     mStorageRefernce = FirebaseStorage.getInstance().getReference();
-
                     reference = FirebaseDatabase.getInstance().getReference().child("Users");
-
-                    Log.d("User", String.valueOf(reference.child(firebaseAuth
-                            .getCurrentUser().getUid())));
-                    Log.d("Tag", "database: " + reference);
-
                     reference.child(firebaseAuth
                             .getCurrentUser()
                             .getUid())
@@ -133,18 +129,20 @@ public class ProfileInformationActivity extends AppCompatActivity  {
                                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                                             name.setText(String.valueOf(dataSnapshot.child("fullname").getValue()));
-                                            Log.d("Name : ", String.valueOf(dataSnapshot.child("fullname").getValue()));
                                             address.setText(String.valueOf(dataSnapshot.child("address").getValue()));
                                             email.setText(String.valueOf(dataSnapshot.child("emailId").getValue()));
                                             userType.setText(String.valueOf(dataSnapshot.child("userType").getValue()));
-                                            String UrlImg = String.valueOf(dataSnapshot.child("image").getValue());
+                                            String UrlImg = String.valueOf(dataSnapshot.child("imgUrl").getValue());
+                                            Log.d("TAG", "UrlImage: " + UrlImg);
                                             if (URLUtil.isValidUrl(UrlImg)) {
-                                                Picasso.with(ProfileInformationActivity.this).load(Uri.parse(UrlImg))
+                                                Glide.with(getApplicationContext())
+                                                        .load(UrlImg)
+                                                        .apply(RequestOptions.circleCropTransform())
                                                         .into(mProfileImage);
                                             }
                                             String UserType = String.valueOf(dataSnapshot.child("userType").getValue());
                                             Log.d("UserType: ", UserType);
-                                            SharedPreferences preferences = getSharedPreferences("my_pref",MODE_PRIVATE);
+                                            SharedPreferences preferences = getSharedPreferences("my_pref", MODE_PRIVATE);
                                             SharedPreferences.Editor editor = preferences.edit();
                                             editor.putString("role", UserType);
                                             editor.apply();
@@ -153,16 +151,16 @@ public class ProfileInformationActivity extends AppCompatActivity  {
 
                                         @Override
                                         public void onCancelled(DatabaseError databaseError) {
-                                            Toast.makeText(getApplicationContext(),"Error in Fetching"+databaseError,Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), "Error in Fetching" + databaseError, Toast.LENGTH_LONG).show();
                                         }
                                     });
+
+
+//                    mProcessDialog.dismiss();
+
                 }
-
-                mProcessDialog.dismiss();
-
             }
         };
-
     }
 
 
@@ -176,7 +174,7 @@ public class ProfileInformationActivity extends AppCompatActivity  {
                     srcUri = data.getData();
                     Log.d("tag", "here" + srcUri);
                     Toast.makeText(this,"File Path :"+srcUri.getPath(), Toast.LENGTH_LONG).show();
-                    StorageReference filepath = mStorageRefernce.child("Photos").child(srcUri.getLastPathSegment());
+                    final StorageReference filepath = mStorageRefernce.child("Photos").child(srcUri.getLastPathSegment());
                     mProcessDialog = new ProgressDialog(this);
                     mProcessDialog.setMax(100);
                     mProcessDialog.setMessage("Loading....");
@@ -202,11 +200,19 @@ public class ProfileInformationActivity extends AppCompatActivity  {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Uri downloadUri = taskSnapshot.getDownloadUrl();
                             Toast.makeText(getApplicationContext(), "Successfully Saved in Storage", Toast.LENGTH_SHORT).show();
-                            Glide.with(ProfileInformationActivity.this).load(downloadUri).apply(RequestOptions.circleCropTransform()).into(mProfileImage);
+                            Glide.with(ProfileInformationActivity.this)
+                                    .load(downloadUri)
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .into(mProfileImage);
+
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid());
+
+                    Map<String, Object> userImage = new HashMap<>();
+                    userImage.put("imgUrl",downloadUri.toString());
+                    reference.updateChildren(userImage);
+
                             mProcessDialog.dismiss();
-
-
-
                         }
                     });
 
@@ -235,12 +241,19 @@ public class ProfileInformationActivity extends AppCompatActivity  {
             switch (item.getItemId()) {
                 case R.id.log_out_profile:
                     auth.signOut();
+
                     Log.d("item ID: ", String.valueOf(item.getItemId()));
+
+                    SharedPreferences preferences1 = getSharedPreferences("login" ,MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences1.edit();
+                    editor.putBoolean("islogin",false);
+                    editor.commit();
                     Intent intent = new Intent(ProfileInformationActivity.this, EmailAndPasswordActivity.class);
+
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
-                    finish();
+
                     break;
 
                 case R.id.change_password:
@@ -249,17 +262,10 @@ public class ProfileInformationActivity extends AppCompatActivity  {
                     return true;
 
                 case R.id.list_of_users:
-
                     Toast.makeText(getApplicationContext(),"Not allowed to User",Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.edit_user_information:
-
-
                     showUpdateDialog();
-
-
-
-
                 default:
                     return true;
 
@@ -268,12 +274,17 @@ public class ProfileInformationActivity extends AppCompatActivity  {
         else
             switch (item.getItemId()){
                 case R.id.log_out_profile:
-                    Log.d("item ID: ", String.valueOf(item.getItemId()));
+
+
+                    SharedPreferences preferences2 = getSharedPreferences("login" ,MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences2.edit();
+                    editor.putBoolean("islogin",false);
+                    editor.commit();
                     Intent intent = new Intent(ProfileInformationActivity.this, EmailAndPasswordActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
-                    finish();
+//                    finish();
                     break;
                 case R.id.change_password:
                     changePassword();
@@ -357,17 +368,14 @@ public class ProfileInformationActivity extends AppCompatActivity  {
         Intent intent = new Intent(ProfileInformationActivity.this,ChangePassword.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        auth.signOut();
-        finish();
     }
 
     @Override
     public void onBackPressed() {
-        Intent backIntent = new Intent(ProfileInformationActivity.this, EmailAndPasswordActivity.class);
-        backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(backIntent);
+        moveTaskToBack(true);
         super.onBackPressed();
     }
+
 }
 
 
