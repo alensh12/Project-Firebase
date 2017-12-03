@@ -116,8 +116,7 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
         googleImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent googleIntent = new Intent(getApplicationContext(),GoogleSignActivity.class);
-                startActivity(googleIntent);
+             Toast.makeText(getApplicationContext(),"Activity under construction",Toast.LENGTH_SHORT).show();
             }
         });
         fbImage = findViewById(R.id.fb_login);

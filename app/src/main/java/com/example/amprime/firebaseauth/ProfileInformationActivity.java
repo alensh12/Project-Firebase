@@ -79,7 +79,6 @@ public class ProfileInformationActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_information);
 
-        mProcessDialog = new ProgressDialog(this);
 
         usernameField = findViewById(R.id.username_field);
         emailIdField = findViewById(R.id.email_id_field);
@@ -109,11 +108,10 @@ public class ProfileInformationActivity extends AppCompatActivity  {
         infoContainer = findViewById(R.id.data_container);
         auth = FirebaseAuth.getInstance();
         Log.d("Tag", "user" + auth);
-        infoContainer.setVisibility(View.INVISIBLE);
+        mProcessDialog = new ProgressDialog(this);
         mProcessDialog.setMessage("Loading....");
-
+        mProcessDialog.show();
         if (!(mProcessDialog == null)) {
-            mProcessDialog.show();
             mauthListener = new FirebaseAuth.AuthStateListener() {
 
                 @Override

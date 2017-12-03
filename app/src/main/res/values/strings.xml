@@ -42,7 +42,7 @@
     <string name="prompt_registration_country">Country</string>
     <string name="password_verification">Not matched</string>
     <string name="validate_age">Age above 18 and below 50</string>
-    <string name="forgot_password_reset_it">Forgot password? Reset it.</string>
+    <string name="forgot_password_reset_it">Forgot password?<u>Reset it.</u></string>
 
     <string-array name="Gender">
         <item name="male">Male</item>
