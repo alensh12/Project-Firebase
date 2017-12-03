@@ -57,4 +57,5 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="push_notification_message">Message</string>
     <string name="push_notification_title">Title</string>
+    <string name="date_string">00:00:00</string>
 </resources>

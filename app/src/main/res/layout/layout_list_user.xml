@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/container"
-        >
+        android:baselineAligned="false">
         <RelativeLayout
             android:id="@+id/icon_container"
             android:layout_width="wrap_content"
@@ -34,7 +34,8 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/bg_circle" />
+                    android:src="@drawable/bg_circle"
+                    android:contentDescription="TODO" />
 
                 <ImageView
                     android:layout_width="25dp"
@@ -119,11 +120,11 @@
                 android:layout_weight="1"
                 >
                 <TextView
-                    android:layout_width="20dp"
+                    android:layout_width="12dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     tools:text="Default"
-                    android:background="@android:color/holo_red_dark"
+                    android:background="@android:color/holo_green_dark"
                     android:textColor="@android:color/white"
                     android:id="@+id/RV_designation"
                     android:textAlignment="center"
@@ -146,7 +147,7 @@
                     android:layout_height="match_parent"
                     android:padding="5dp"
                     android:layout_weight="1"
-                    android:text="00:00:00"
+                    android:text="@string/date_string"
                     android:id="@+id/RV_time"
                     android:textAlignment="center"
                     android:background="@color/colorPrimary"

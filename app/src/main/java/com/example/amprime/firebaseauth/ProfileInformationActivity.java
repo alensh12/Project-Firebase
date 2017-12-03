@@ -21,6 +21,7 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class ProfileInformationActivity extends AppCompatActivity  {
 
 
     public TextView name, email, address, userType,usernameField, emailIdField,addressField,usertypeField;
+    private RelativeLayout infoContainer;
     private FirebaseAuth auth;
     private static final int SELECT_PHOTO = 100;
     private DatabaseReference reference;
@@ -83,7 +85,7 @@ public class ProfileInformationActivity extends AppCompatActivity  {
         emailIdField = findViewById(R.id.email_id_field);
         addressField = findViewById(R.id.address_field);
         usertypeField = findViewById(R.id.designation_field);
-        typeface = Typeface.createFromAsset(getAssets(),"Raleway-Medium.ttf");
+        typeface = Typeface.createFromAsset(getAssets(), "Raleway-Medium.ttf");
         usernameField.setTypeface(typeface);
         emailIdField.setTypeface(typeface);
         addressField.setTypeface(typeface);
@@ -102,67 +104,72 @@ public class ProfileInformationActivity extends AppCompatActivity  {
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
 
 
-
             }
         });
-
+        infoContainer = findViewById(R.id.data_container);
         auth = FirebaseAuth.getInstance();
         Log.d("Tag", "user" + auth);
+        infoContainer.setVisibility(View.INVISIBLE);
+        mProcessDialog.setMessage("Loading....");
 
-        mauthListener = new FirebaseAuth.AuthStateListener() {
+        if (!(mProcessDialog == null)) {
+            mProcessDialog.show();
+            mauthListener = new FirebaseAuth.AuthStateListener() {
 
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                mProcessDialog.setMessage("Loading...");
-//                mProcessDialog.show();
-                Log.d("TAg", "CurrentUser: " + auth.getCurrentUser());
-                if (auth.getCurrentUser() != null) {
-                    mStorageRefernce = FirebaseStorage.getInstance().getReference();
-                    reference = FirebaseDatabase.getInstance().getReference().child("Users");
-                    reference.child(firebaseAuth
-                            .getCurrentUser()
-                            .getUid())
-                            .addValueEventListener(
-                                    new ValueEventListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.d("TAg", "CurrentUser: " + auth.getCurrentUser());
+                    if (auth.getCurrentUser() != null) {
 
-                                            name.setText(String.valueOf(dataSnapshot.child("fullname").getValue()));
-                                            address.setText(String.valueOf(dataSnapshot.child("address").getValue()));
-                                            email.setText(String.valueOf(dataSnapshot.child("emailId").getValue()));
-                                            userType.setText(String.valueOf(dataSnapshot.child("userType").getValue()));
-                                            String UrlImg = String.valueOf(dataSnapshot.child("imgUrl").getValue());
-                                            Log.d("TAG", "UrlImage: " + UrlImg);
-                                            if (URLUtil.isValidUrl(UrlImg)) {
-                                                Glide.with(getApplicationContext())
-                                                        .load(UrlImg)
-                                                        .apply(RequestOptions.circleCropTransform())
-                                                        .into(mProfileImage);
+                        mStorageRefernce = FirebaseStorage.getInstance().getReference();
+                        reference = FirebaseDatabase.getInstance().getReference().child("Users");
+                        reference.child(firebaseAuth
+                                .getCurrentUser()
+                                .getUid())
+                                .addValueEventListener(
+                                        new ValueEventListener() {
+
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                name.setText(String.valueOf(dataSnapshot.child("fullname").getValue()));
+                                                address.setText(String.valueOf(dataSnapshot.child("address").getValue()));
+                                                email.setText(String.valueOf(dataSnapshot.child("emailId").getValue()));
+                                                userType.setText(String.valueOf(dataSnapshot.child("userType").getValue()));
+                                                String UrlImg = String.valueOf(dataSnapshot.child("imgUrl").getValue());
+                                                Log.d("TAG", "UrlImage: " + UrlImg);
+                                                if (URLUtil.isValidUrl(UrlImg)) {
+                                                    Glide.with(getApplicationContext())
+                                                            .load(UrlImg)
+                                                            .apply(RequestOptions.circleCropTransform())
+                                                            .into(mProfileImage);
+                                                }
+                                                String UserType = String.valueOf(dataSnapshot.child("userType").getValue());
+                                                Log.d("UserType: ", UserType);
+                                                SharedPreferences preferences = getSharedPreferences("my_pref", MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = preferences.edit();
+                                                editor.putString("role", UserType);
+                                                editor.apply();
+
+
                                             }
-                                            String UserType = String.valueOf(dataSnapshot.child("userType").getValue());
-                                            Log.d("UserType: ", UserType);
-                                            SharedPreferences preferences = getSharedPreferences("my_pref", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = preferences.edit();
-                                            editor.putString("role", UserType);
-                                            editor.apply();
 
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-                                            Toast.makeText(getApplicationContext(), "Error in Fetching" + databaseError, Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                Toast.makeText(getApplicationContext(), "Error in Fetching" + databaseError, Toast.LENGTH_LONG).show();
+                                            }
+                                        });
 
 
-//                    mProcessDialog.dismiss();
+                    }
 
                 }
-            }
-        };
+            };
+        }
+        infoContainer.setVisibility(View.VISIBLE);
+        mProcessDialog.dismiss();
     }
-
 
 
     @Override

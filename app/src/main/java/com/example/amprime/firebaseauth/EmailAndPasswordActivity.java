@@ -190,6 +190,7 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
                                     Log.w("TAG", "signInWithEmail:failed", task.getException());
                                     Toast.makeText(EmailAndPasswordActivity.this, "Incorrect Password/Username",
                                             Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                 }
 
                             }
@@ -198,6 +199,7 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
         }catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
     /***Sign up new users**/
