@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:id="@+id/sign_in_sign_out"
-            tools:text ="Signed Out"
+            tools:text ="Default"
             android:textColor="@android:color/holo_red_dark"
             android:textAlignment="center"/>
 
@@ -74,7 +74,8 @@
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:text="@string/forgot_password_reset_it"
-                android:textColor="#000" />
+                android:textColor="#000"
+                />
 
 
         </LinearLayout>
@@ -102,11 +103,8 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/google_icon"
-
+                android:src="@mipmap/firebase_google_foreground"
                 android:id="@+id/google_login"
-
-
                 />
             <ImageView
                 android:layout_width="30dp"
@@ -118,6 +116,11 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@mipmap/tweet_ic"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/firebase_github_icon"
                 />
 
 

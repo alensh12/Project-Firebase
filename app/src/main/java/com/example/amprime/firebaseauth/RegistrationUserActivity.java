@@ -599,7 +599,7 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
                 }
             }
 
-            // TODO: register the new account here.
+
             return true;
         }
 

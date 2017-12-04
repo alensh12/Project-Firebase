@@ -93,7 +93,6 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
     private void viewsAndButton() {
         usernameText = findViewById(R.id.userField);
         passwordText = findViewById(R.id.passwordField);
-
         SignInButton = findViewById(R.id.sign_in_button);
         RegisterUserButton = findViewById(R.id.register_user_button);
 
@@ -155,11 +154,15 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
             if (TextUtils.isEmpty(email)) {
                // Toast.makeText(this, "username empty", Toast.LENGTH_SHORT).show();
                 usernameText.setError("username empty");
+                progressDialog.dismiss();
             }
             if (TextUtils.isEmpty(password)) {
                // Toast.makeText(this, "password not entered", Toast.LENGTH_SHORT).show();
                 passwordText.setError("password not entered");
-            } else {
+                progressDialog.dismiss();
+            }
+
+            else {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -167,9 +170,8 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
                                 if (task.isSuccessful()) {
                                     SignInSignOut.setText("Successfully Signed In");
                                     SignInSignOut.setTextColor(Color.GREEN);
-
+                                    progressDialog.dismiss();
                                     startActivity(new Intent(getApplicationContext(), ProfileInformationActivity.class));
-                                    finish();
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferences.edit();

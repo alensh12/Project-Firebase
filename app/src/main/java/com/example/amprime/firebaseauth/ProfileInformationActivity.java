@@ -1,13 +1,16 @@
 package com.example.amprime.firebaseauth;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -46,10 +49,10 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfileInformationActivity extends AppCompatActivity  {
+public class ProfileInformationActivity extends AppCompatActivity {
 
 
-    public TextView name, email, address, userType,usernameField, emailIdField,addressField,usertypeField;
+    public TextView name, email, address, userType, usernameField, emailIdField, addressField, usertypeField;
     private RelativeLayout infoContainer;
     private FirebaseAuth auth;
     private static final int SELECT_PHOTO = 100;
@@ -106,31 +109,41 @@ public class ProfileInformationActivity extends AppCompatActivity  {
             }
         });
         infoContainer = findViewById(R.id.data_container);
+        mProcessDialog = new ProgressDialog(this);
+        mProcessDialog.setMessage("Loading User Info......");
+        mProcessDialog.setMax(100);
+        mProcessDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProcessDialog.setCancelable(false);
+
         auth = FirebaseAuth.getInstance();
         Log.d("Tag", "user" + auth);
-        mProcessDialog = new ProgressDialog(this);
-        mProcessDialog.setMessage("Loading....");
+
+
+        mauthListener = new FirebaseAuth.AuthStateListener() {
+
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+
+
+                Log.d("TAg", "CurrentUser: " + auth.getCurrentUser());
+                if (auth.getCurrentUser() != null) {
+        try {
         mProcessDialog.show();
-        if (!(mProcessDialog == null)) {
-            mauthListener = new FirebaseAuth.AuthStateListener() {
+        }catch (Exception e){
 
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        }
+                    mStorageRefernce = FirebaseStorage.getInstance().getReference();
+                    reference = FirebaseDatabase.getInstance().getReference().child("Users");
+                    reference.child(firebaseAuth
+                            .getCurrentUser()
+                            .getUid())
+                            .addValueEventListener(
+                                    new ValueEventListener() {
 
-                    Log.d("TAg", "CurrentUser: " + auth.getCurrentUser());
-                    if (auth.getCurrentUser() != null) {
-
-                        mStorageRefernce = FirebaseStorage.getInstance().getReference();
-                        reference = FirebaseDatabase.getInstance().getReference().child("Users");
-                        reference.child(firebaseAuth
-                                .getCurrentUser()
-                                .getUid())
-                                .addValueEventListener(
-                                        new ValueEventListener() {
-
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.exists()) {
                                                 name.setText(String.valueOf(dataSnapshot.child("fullname").getValue()));
                                                 address.setText(String.valueOf(dataSnapshot.child("address").getValue()));
                                                 email.setText(String.valueOf(dataSnapshot.child("emailId").getValue()));
@@ -149,25 +162,28 @@ public class ProfileInformationActivity extends AppCompatActivity  {
                                                 SharedPreferences.Editor editor = preferences.edit();
                                                 editor.putString("role", UserType);
                                                 editor.apply();
-
-
+                                                mProcessDialog.dismiss();
+                                            }
+                                            else{
+                                                mProcessDialog.dismiss();
+                                                Toast.makeText(user, "empty", Toast.LENGTH_SHORT).show();
                                             }
 
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-                                                Toast.makeText(getApplicationContext(), "Error in Fetching" + databaseError, Toast.LENGTH_LONG).show();
-                                            }
-                                        });
+                                        }
 
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                            Toast.makeText(getApplicationContext(), "Error in Fetching" + databaseError, Toast.LENGTH_LONG).show();
+                                            mProcessDialog.dismiss();
+                                        }
+                                    });
 
-                    }
 
                 }
-            };
-        }
-        infoContainer.setVisibility(View.VISIBLE);
-        mProcessDialog.dismiss();
-    }
+
+            }
+        };
+}
 
 
     @Override
