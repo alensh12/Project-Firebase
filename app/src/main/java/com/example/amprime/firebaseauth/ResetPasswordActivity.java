@@ -38,10 +38,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 auth = FirebaseAuth.getInstance();
                 final String email = resetEmail.getText().toString().trim();
-                if(!TextUtils.isEmpty(email)){
-//                    resetEmail.setError("empty");
+                if (!TextUtils.isEmpty(email)) {
+                   resetEmail.setError("empty");
 
-                if(auth.getCurrentUser()!= null) {
+
                     auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -54,32 +54,27 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                 if (!isvalidEmail(email)) {
                                     resetEmail.setError("Invalid email Address");
 
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(ResetPasswordActivity.this, "Username Not Registered", Toast.LENGTH_SHORT).show();
 
                                 }
                                 resetEmail.setText("");
                             }
                         }
+
                         private boolean isvalidEmail(String email) {
-                        return email.matches(String.valueOf(Patterns.EMAIL_ADDRESS));
+                            return email.matches(String.valueOf(Patterns.EMAIL_ADDRESS));
                         }
                     });
 
 
-                }
-                if(auth.getCurrentUser()==null) {
-                    Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT).show();
-                }
-                }
-                else if(TextUtils.isEmpty(email)){
-                    Log.d("TAg","empty "+TextUtils.isEmpty(email));
+                } else if (TextUtils.isEmpty(email)) {
+                    Log.d("TAg", "empty " + TextUtils.isEmpty(email));
                     resetEmail.setError("email required");
                 }
             }
         });
 
 
-    }
+        }
 }

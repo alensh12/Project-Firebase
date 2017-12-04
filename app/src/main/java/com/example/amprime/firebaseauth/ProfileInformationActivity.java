@@ -111,8 +111,6 @@ public class ProfileInformationActivity extends AppCompatActivity {
         infoContainer = findViewById(R.id.data_container);
         mProcessDialog = new ProgressDialog(this);
         mProcessDialog.setMessage("Loading User Info......");
-        mProcessDialog.setMax(100);
-        mProcessDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProcessDialog.setCancelable(false);
 
         auth = FirebaseAuth.getInstance();

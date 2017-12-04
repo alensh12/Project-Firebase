@@ -68,9 +68,6 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
 
         /*** Initialization of FirebaseAuth **/
         mAuth = FirebaseAuth.getInstance();
-
-
-
     }
 
     @Override
