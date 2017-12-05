@@ -220,5 +220,9 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+        super.onBackPressed();
+    }
 }

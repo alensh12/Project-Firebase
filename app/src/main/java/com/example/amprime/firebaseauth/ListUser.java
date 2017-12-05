@@ -80,7 +80,7 @@ public class ListUser extends AppCompatActivity implements UserAdapter.MessageAd
         mAdapter = new UserAdapter(this,entries,this);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabaseReference =FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("createdTimestamp");
+        mDatabaseReference =FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("time");
         Log.d("Tag",""+mDatabaseReference);
         Log.d("Tag","User"+mAuth.getCurrentUser());
         mListener = new FirebaseAuth.AuthStateListener() {

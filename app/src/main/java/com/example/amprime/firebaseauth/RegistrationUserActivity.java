@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -90,6 +91,7 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
     private View mLoginFormView;
     private FirebaseAuth firebaseAuthh;
     private  DatabaseReference dbRefernce;
+    private ProgressDialog mdialog;
     private Spinner mSpinnerCountry;
 //    private RadioGroup radioGroup;
 //    private RadioButton radioButton;
@@ -111,6 +113,7 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
         // Set up the login form.
         mEmailView = findViewById(R.id.email);
         populateAutoComplete();
+        mdialog = new ProgressDialog(this);
         firebaseAuthh = FirebaseAuth.getInstance();
 //        radioGroup = findViewById(R.id.radio_group);
 //        radioButton = findViewById(R.id.checkbox_user);
@@ -193,6 +196,7 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 attemptRegister();
 
@@ -357,7 +361,13 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            mdialog.setMessage("Registering......");
+            try {
+                mdialog.show();
+            }
+            catch (Exception e){
 
+            }
 
             firebaseAuthh.createUserWithEmailAndPassword(email,password)
                     .addOnCompleteListener(
@@ -390,7 +400,7 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
                            // dbRefernce.child(uId).setValue(information);
                             dbRefernce.child(user.getUid()).setValue(information);
                         }
-
+                        mdialog.dismiss();
                         startActivity(new Intent(getApplicationContext(),EmailAndPasswordActivity.class));
 
 
@@ -399,11 +409,13 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
                         showProgress(true);
                         Toast.makeText(getApplicationContext(),"Failed to be  Created",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(),RegistrationUserActivity.class));
-                        finish();
+                        mdialog.dismiss();
+
                     }
                     else
                     {
-                        finish();
+                        mdialog.dismiss();
+
                     }
 
                 }
@@ -621,6 +633,12 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(RegistrationUserActivity.this,EmailAndPasswordActivity.class));
+        super.onBackPressed();
     }
 }
 
