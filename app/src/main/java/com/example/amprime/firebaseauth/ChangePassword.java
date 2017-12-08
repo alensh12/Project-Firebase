@@ -33,9 +33,9 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_password_layout);
         auth = FirebaseAuth.getInstance();
-        changePassword = (EditText) findViewById(R.id.change_password_field);
-        reChangePassword = (EditText) findViewById(R.id.re_changePassword);
-        changeButton = (Button) findViewById(R.id.change_password_button);
+        changePassword = findViewById(R.id.change_password_field);
+        reChangePassword = findViewById(R.id.re_changePassword);
+        changeButton = findViewById(R.id.change_password_button);
 
         changeButton.setOnClickListener(this);
         SharedPreferences preferences = getSharedPreferences("my_pref",MODE_PRIVATE);
@@ -77,8 +77,8 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
 
                             Toast.makeText(ChangePassword.this, "Password changed", Toast.LENGTH_SHORT).show();
-                            auth.signOut();
-                            finish();
+                           // auth.signOut();
+                          //   finish();
                             startActivity(new Intent(getApplicationContext(), EmailAndPasswordActivity.class));
                         }
                         if (!task.isSuccessful()) {

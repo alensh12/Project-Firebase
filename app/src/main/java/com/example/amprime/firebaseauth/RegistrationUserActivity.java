@@ -407,7 +407,7 @@ public class RegistrationUserActivity extends AppCompatActivity implements Loade
                     }
                     if(!task.isSuccessful()){
                         showProgress(true);
-                        Toast.makeText(getApplicationContext(),"Failed to be  Created",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Duplicate Username not allowed",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(),RegistrationUserActivity.class));
                         mdialog.dismiss();
 

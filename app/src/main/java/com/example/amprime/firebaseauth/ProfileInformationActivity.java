@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -61,7 +62,6 @@ public class ProfileInformationActivity extends AppCompatActivity {
     ProgressDialog mProcessDialog;
     private Uri srcUri;
     private ImageView mProfileImage;
-    private ListUser user;
     private StorageReference mStorageRefernce;
     private static final String mAdmin = "Admin";
     private static final String mUser = "User";
@@ -95,6 +95,7 @@ public class ProfileInformationActivity extends AppCompatActivity {
 
         name = findViewById(R.id.PI_name);
         email = findViewById(R.id.PI_email);
+        email.setMovementMethod(new ScrollingMovementMethod());
         address = findViewById(R.id.PI_address);
         userType = findViewById(R.id.PI_Designation);
         mProfileImage = findViewById(R.id.PI_profile_image);
@@ -164,7 +165,7 @@ public class ProfileInformationActivity extends AppCompatActivity {
                                             }
                                             else{
                                                 mProcessDialog.dismiss();
-                                                Toast.makeText(user, "empty", Toast.LENGTH_SHORT).show();
+
                                             }
 
                                         }
