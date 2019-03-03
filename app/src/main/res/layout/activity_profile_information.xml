@@ -1,242 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    tools:context="com.example.amprime.firebaseauth.ProfileInformationActivity"
-    android:theme="@style/ThemeOverlay.ProfileInformationText">
+    android:fitsSystemWindows="true"
+    android:theme="@style/ThemeOverlay.ProfileInformationText"
+    tools:context="com.example.amprime.firebaseauth.ProfileInformationActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:background="@drawable/pi_bg"
-        />
-
-    <RelativeLayout
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-
-        android:layout_marginTop="110dp"
-        android:layout_alignParentRight="true"
-
-        android:background="@android:color/transparent"
-        android:id="@+id/image_container">
-
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@mipmap/ic_user_xxxhdpi"
-            android:id="@+id/PI_profile_image"
-
-
-            android:elevation="3dp"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_below="@+id/image_container"
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/data_container"
-
+        android:orientation="vertical"
         >
 
-        <!--User Name View-->
-        <LinearLayout
+        <include layout="@layout/toolbar" />
+
+        <FrameLayout
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="3"
-            android:id="@+id/Name_linear_layout"
-            android:elevation="20dp">
-            <TextView
+            android:layout_height="match_parent">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:background="@color/colorAccent"
-                android:text="Full Name : "
-                android:textColor="@android:color/white"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:id="@+id/username_field"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="156dp"
+                    android:background="@drawable/pi_bg" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:textAlignment="center"
-                tools:text="Alensh"
-                android:maxLength="25"
-                android:maxLines="1"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/PI_name"
-                />
+                <RelativeLayout
+                    android:id="@+id/image_container"
+                    android:layout_width="80dp"
 
-        </LinearLayout>
+                    android:layout_height="80dp"
+                    android:layout_alignParentRight="true"
+
+                    android:layout_marginTop="110dp"
+                    android:background="@android:color/transparent">
 
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:background="#c0c0c0"
-            android:layout_below="@+id/Name_linear_layout"
-            android:layout_margin="5dp"
-            android:id="@+id/name_divider"/>
-        <!--*****************************-->
-        <!--Email Address Linear Layout-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="3"
-            android:layout_below="@+id/name_divider"
-            android:id="@+id/email_linear_layout"
-            android:elevation="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:background="@color/colorAccent"
-                android:text="Email Id : "
-                android:textColor="@android:color/white"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:id="@+id/email_id_field"
-
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="1dp"
-                android:textAlignment="center"
-                tools:text="alensh@gmail.com"
-                android:maxLength="50"
-                android:scrollbars="horizontal"
-                android:maxLines="1"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/PI_email"
-                />
-
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/PI_profile_image"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:elevation="3dp"
 
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:background="#c0c0c0"
-            android:layout_below="@+id/email_linear_layout"
-            android:layout_margin="5dp"
-            android:id="@+id/email_divider"/>
-        <!--***************************************************-->
-        <!--Designation Linear Layout-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="3"
-            android:id="@+id/Designation_linear_layout"
-            android:layout_below="@+id/email_divider"
-            android:elevation="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:background="@color/colorAccent"
-                android:text="Designation : "
-                android:textColor="@android:color/white"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:id="@+id/designation_field"
-                />
+                        android:src="@mipmap/ic_user_xxxhdpi" />
+                </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:textAlignment="center"
-                tools:text="Admin"
-                android:maxLength="25"
-                android:maxLines="1"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/PI_Designation"    />
+                <RelativeLayout
+                    android:id="@+id/data_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/image_container"
 
-        </LinearLayout>
+                    >
 
+                    <!--User Name View-->
+                    <LinearLayout
+                        android:id="@+id/Name_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="20dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:weightSum="3">
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:background="#c0c0c0"
-            android:layout_below="@+id/Designation_linear_layout"
-            android:layout_margin="5dp"
-            android:id="@+id/designation_divider"/>
-        <!--***************************************************-->
+                        <TextView
+                            android:id="@+id/username_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:background="@color/colorAccent"
+                            android:padding="5dp"
+                            android:text="Full Name : "
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
 
-        <!--Address Linear Layout-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="3"
-            android:id="@+id/Address_linear_layout"
-            android:layout_below="@+id/designation_divider"
-            android:elevation="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:background="@color/colorAccent"
-                android:text="Address : "
-                android:textColor="@android:color/white"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:id="@+id/address_field"
+                            />
 
-                />
+                        <TextView
+                            android:id="@+id/PI_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxLength="25"
+                            android:maxLines="1"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryDark"
+                            tools:text="Alensh" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:textAlignment="center"
-                tools:text="Default"
-                android:maxLength="25"
-                android:maxLines="1"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/PI_address"/>
-
-        </LinearLayout>
+                    </LinearLayout>
 
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:background="#c0c0c0"
-            android:layout_below="@+id/Address_linear_layout"
-            android:layout_margin="5dp"/>
-        <!--***************************************************-->
+                    <View
+                        android:id="@+id/name_divider"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/Name_linear_layout"
+                        android:layout_margin="5dp"
+                        android:background="#c0c0c0" />
+                    <!--*****************************-->
+                    <!--Email Address Linear Layout-->
+                    <LinearLayout
+                        android:id="@+id/email_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/name_divider"
+                        android:elevation="20dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/email_id_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:background="@color/colorAccent"
+                            android:padding="5dp"
+                            android:text="Email Id : "
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/PI_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxLength="50"
+                            android:maxLines="1"
+                            android:padding="1dp"
+                            android:scrollbars="horizontal"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryDark"
+                            tools:text="alensh@gmail.com" />
+
+                    </LinearLayout>
 
 
-    </RelativeLayout>
+                    <View
+                        android:id="@+id/email_divider"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/email_linear_layout"
+                        android:layout_margin="5dp"
+                        android:background="#c0c0c0" />
+                    <!--***************************************************-->
+                    <!--Designation Linear Layout-->
+                    <LinearLayout
+                        android:id="@+id/Designation_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/email_divider"
+                        android:elevation="20dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/designation_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:background="@color/colorAccent"
+                            android:padding="5dp"
+                            android:text="Designation : "
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/PI_Designation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxLength="25"
+                            android:maxLines="1"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryDark"
+                            tools:text="Admin" />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/designation_divider"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/Designation_linear_layout"
+                        android:layout_margin="5dp"
+                        android:background="#c0c0c0" />
+                    <!--***************************************************-->
+
+                    <!--Address Linear Layout-->
+                    <LinearLayout
+                        android:id="@+id/Address_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/designation_divider"
+                        android:elevation="20dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:id="@+id/address_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:background="@color/colorAccent"
+                            android:padding="5dp"
+                            android:text="Address : "
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/PI_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:maxLength="25"
+                            android:maxLines="1"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryDark"
+                            tools:text="Default" />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/Address_linear_layout"
+                        android:layout_margin="5dp"
+                        android:background="#c0c0c0" />
+                    <!--***************************************************-->
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </FrameLayout>>
+    </LinearLayout>
+
+    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/menu_main" />
 
 
 
 
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

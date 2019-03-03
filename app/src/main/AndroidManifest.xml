@@ -16,7 +16,7 @@
         android:icon="@mipmap/fb_main_launcher"
         android:roundIcon="@mipmap/fb_main_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MyAppTheme">
         <activity
             android:name=".ChooserActivity"
             android:screenOrientation="portrait">
@@ -26,14 +26,19 @@
             android:name=".GoogleSignActivity"
             android:label="@string/google_sign" />
         <activity
-            android:name=".EmailAndPasswordActivity"
-            android:label="Firebase"
-            android:screenOrientation="portrait">
+            android:name=".SplashScreen"
+            android:label= "Firebase">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".EmailAndPasswordActivity"
+            android:screenOrientation="portrait">
+
         </activity>
         <activity
             android:name=".ProfileInformationActivity"
@@ -47,7 +52,7 @@
             android:name=".ListUser"
             android:label="Registered Users"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".ChangePassword"
             android:label="Change Password" />

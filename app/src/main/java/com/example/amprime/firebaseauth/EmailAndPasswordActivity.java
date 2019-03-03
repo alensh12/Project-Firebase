@@ -216,6 +216,9 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
         }
         else {
             Toast.makeText(getApplicationContext(),"No Internet Access",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this,RegistrationUserActivity.class);
+            Log.d("TAG",""+intent);
+            startActivity(intent);
 
         }
     }

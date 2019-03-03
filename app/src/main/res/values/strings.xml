@@ -58,4 +58,6 @@
     <string name="push_notification_message">Message</string>
     <string name="push_notification_title">Title</string>
     <string name="date_string">00:00:00</string>
+    <string name="open">open</string>
+    <string name="close">open</string>
 </resources>
