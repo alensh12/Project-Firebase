@@ -41,6 +41,7 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile_information.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 import java.util.HashMap
 
@@ -65,6 +66,7 @@ class ProfileInformationActivity : AppCompatActivity() {
     private lateinit var uploadTask: StorageTask<UploadTask.TaskSnapshot>
     private var typeface: Typeface? = null
     lateinit var drawerLayout: DrawerLayout
+    lateinit var toolbarIcon: ImageView
 
 
     override fun onStart() {
@@ -77,6 +79,8 @@ class ProfileInformationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_information)
         val mainLayout: LinearLayout = findViewById(R.id.main_content)
+        toolbarIcon = findViewById(R.id.toolbar_logo)
+
         setUpDrawer()
         setUPToolbar()
 //        val imageView = ImageView(actionBar!!.themedContext)
@@ -184,7 +188,8 @@ class ProfileInformationActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar
         actionBar?.apply {
             setHomeAsUpIndicator(R.drawable.ic_search)
-            setDisplayHomeAsUpEnabled(true)
+            setDisplayHomeAsUpEnabled(false)
+            setDisplayShowTitleEnabled(true)
         }
 
 
@@ -193,18 +198,39 @@ class ProfileInformationActivity : AppCompatActivity() {
     private fun setUpDrawer() {
         val navDrawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
-        navView.setNavigationItemSelectedListener {
+        navView.setNavigationItemSelectedListener { it ->
+            when (it.itemId) {
+                R.id.log_out_profile -> {
+                    Log.e("menu", "Logout")
+                }
+                R.id.edit_user_information -> {
+
+                }
+                R.id.change_password -> {
+
+                }
+                R.id.list_of_users -> {
+                    startActivity(Intent(this@ProfileInformationActivity, ListUserMainActivity::class.java))
+                }
+            }
             navDrawerLayout.closeDrawers()
             return@setNavigationItemSelectedListener true
         }
-        val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this, navDrawerLayout, R.string.open, R.string.close) {
+        val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this, navDrawerLayout, toolbar, R.string.open, R.string.close) {
             override fun onDrawerSlide(drawerView: View?, slideOffset: Float) {
                 val slideX = drawerView!!.width * slideOffset
-                main_content.translationX = - slideX
+                main_content.translationX = -slideX
                 super.onDrawerSlide(drawerView, slideOffset)
             }
         }
         navDrawerLayout.addDrawerListener(actionBarDrawerToggle)
+        toolbarIcon.setOnClickListener {
+            if (drawerLayout.isDrawerOpen(Gravity.END)) {
+                drawerLayout.closeDrawer(Gravity.END)
+            } else {
+                drawerLayout.openDrawer(Gravity.END)
+            }
+        }
     }
 
 
@@ -251,13 +277,13 @@ class ProfileInformationActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.profile_information_menu, menu)
-        userListItem = menu.findItem(R.id.list_of_users)
-        return true
-
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+////        val inflater = menuInflater
+////        inflater.inflate(R.menu.profile_information_menu, menu)
+////        userListItem = menu.findItem(R.id.list_of_users)
+////        return true
+//
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -301,17 +327,15 @@ class ProfileInformationActivity : AppCompatActivity() {
         } else
             when (item.itemId) {
                 android.R.id.home -> {
-                    if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
-                        drawerLayout.closeDrawer(Gravity.RIGHT)
+                    if (drawerLayout.isDrawerOpen(Gravity.END)) {
+                        drawerLayout.closeDrawer(Gravity.END)
                     } else {
-                        drawerLayout.openDrawer(Gravity.RIGHT)
+                        drawerLayout.openDrawer(Gravity.END)
                     }
                     return true
 
                 }
                 R.id.log_out_profile -> {
-
-
                     val preferences2 = getSharedPreferences("login", Context.MODE_PRIVATE)
                     val editor = preferences2.edit()
                     editor.putBoolean("islogin", false)

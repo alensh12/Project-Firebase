@@ -3,32 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/log_out_profile"
-        android:title="Log out"
         android:icon="@drawable/push_notification"
+        android:title="Log out"
         app:showAsAction="never">
 
     </item>
     <item
         android:id="@+id/change_password"
-        android:title="Change Password"
         android:icon="@drawable/push_notification"
+        android:title="Change Password"
         app:showAsAction="never">
 
     </item>
 
     <item
         android:id="@+id/list_of_users"
+        android:icon="@drawable/push_notification"
         android:title="Users List"
-        android:icon="@drawable/push_notification"
         app:showAsAction="never">
-
-    </item>
-    <item
-        android:id="@+id/edit_user_information"
-        android:title="Edit Information"
-        android:icon="@drawable/push_notification"
-        app:showAsAction="never">
-
 
     </item>
 

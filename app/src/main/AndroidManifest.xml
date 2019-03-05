@@ -56,6 +56,8 @@
         <activity
             android:name=".ChangePassword"
             android:label="Change Password" />
+        <activity android:name=".ListUserMainActivity">
+        </activity>
         <!-- <activity android:name=".RegistrationAdminActivity"> -->
 
 
