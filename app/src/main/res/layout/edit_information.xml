@@ -21,13 +21,13 @@
         android:text="Designation"
         android:textSize="17sp"
         android:layout_marginBottom="10dp"/>
-    <android.support.v7.widget.AppCompatSpinner
+    <androidx.appcompat.widget.AppCompatSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/designation_spinner"
         android:entries="@array/designation">
 
-    </android.support.v7.widget.AppCompatSpinner>
+    </androidx.appcompat.widget.AppCompatSpinner>
 
 
     <LinearLayout

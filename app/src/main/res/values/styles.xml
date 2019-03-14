@@ -10,8 +10,8 @@
         <!--<item name="windowActionBar">false</item>-->
         <!--<item name ="windowNoTitle">true</item>-->
     </style>
-    <style name="MyAppTheme"
-        parent="@style/AppTheme"/>
+
+    <style name="MyAppTheme" parent="@style/AppTheme" />
 
     <style name="AppTheme.NoActionBar">
         <item name="windowNoTitle">true</item>
@@ -63,6 +63,20 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@color/colorAccent</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="background">@color/colorPrimary</item>
+    </style>
 
 
 </resources>

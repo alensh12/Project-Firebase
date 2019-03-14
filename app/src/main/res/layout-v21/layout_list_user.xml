@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_list_row"
@@ -34,13 +35,13 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/bg_circle" />
+                app:srcCompat="@drawable/bg_circle" />
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/ic_done"
+                app:srcCompat="@drawable/ic_done"
                 />
         </RelativeLayout>
 
@@ -55,7 +56,7 @@
                 android:id="@+id/icon_profile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/bg_circle"/>
+                app:srcCompat="@drawable/bg_circle"/>
 
             <TextView
                 android:id="@+id/icon_text"

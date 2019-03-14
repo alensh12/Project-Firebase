@@ -2,19 +2,17 @@ package com.example.amprime.firebaseauth;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.amprime.firebaseauth.Helper.SimpleDividerItemDecoration;
+import com.example.amprime.firebaseauth.helper.SimpleDividerItemDecoration;
 
 public class ChooserActivity extends AppCompatActivity {
     private static final Class[] classes = {

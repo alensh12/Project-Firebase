@@ -4,12 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 
 class SplashScreen : AppCompatActivity() {
+   var imageView: ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         setContentView(R.layout.activity_splash)
@@ -18,40 +19,14 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun scheduleSplashScreen() {
+
+
+        imageView = findViewById(R.id.imageView)
+        val animShake: Animation = AnimationUtils.loadAnimation(this.applicationContext, R.anim.shake_animation)
+        imageView?.startAnimation(animShake)
         val splashScreenDuration = getSplashDuration()
         Handler().postDelayed({
-            val imageView: ImageView = findViewById(R.id.imageView)
-            val animRotate: Animation = AnimationUtils.loadAnimation(this.applicationContext, R.anim.rotate)
-            val animAntiRotate: Animation = AnimationUtils.loadAnimation(this.applicationContext, R.anim.antirotate)
-            val animation3: Animation = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-            imageView.startAnimation(animAntiRotate)
-            animAntiRotate.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(p0: Animation?) {
-
-                }
-
-                override fun onAnimationEnd(p0: Animation?) {
-                    imageView.startAnimation(animAntiRotate)
-                }
-
-                override fun onAnimationStart(p0: Animation?) {
-
-                }
-
-            })
-            animRotate.setAnimationListener(object : Animation.AnimationListener{
-                override fun onAnimationRepeat(p0: Animation?) {
-                }
-
-                override fun onAnimationEnd(p0: Animation?) {
-                    imageView.startAnimation(animation3)
-                    finish()
-                }
-
-                override fun onAnimationStart(p0: Animation?) {
-                }
-            })
-
+//            imageView.clearAnimation()
             startActivity(Intent(this@SplashScreen, EmailAndPasswordActivity::class.java))
         }, splashScreenDuration)
 

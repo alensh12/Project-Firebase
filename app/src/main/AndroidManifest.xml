@@ -27,7 +27,7 @@
             android:label="@string/google_sign" />
         <activity
             android:name=".SplashScreen"
-            android:label= "Firebase">
+            android:label="Firebase">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,13 +51,11 @@
         <activity
             android:name=".ListUser"
             android:label="Registered Users"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ChangePassword"
             android:label="Change Password" />
-        <activity android:name=".ListUserMainActivity">
-        </activity>
+        <activity android:name=".ListUserMainActivity"></activity>
         <!-- <activity android:name=".RegistrationAdminActivity"> -->
 
 
@@ -68,7 +66,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ActivityPushNotificationConsole" />
 
-        <service android:name=".Services.FirebaseInstanceIDService">
+        <service android:name=".services.FirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -78,6 +76,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".TeamInfoActivity"
+            android:label="Team Detail"
+            android:screenOrientation="portrait" />
 
     </application>
 

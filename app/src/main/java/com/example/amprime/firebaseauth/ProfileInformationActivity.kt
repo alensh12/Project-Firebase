@@ -1,64 +1,52 @@
 package com.example.amprime.firebaseauth
 
-import android.app.Activity
-import android.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.drm.DrmStore
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBar
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
-import android.view.*
+import android.view.MenuItem
+import android.view.View
 import android.webkit.URLUtil
 import android.widget.*
-
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.OnProgressListener
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile_information.*
 import kotlinx.android.synthetic.main.toolbar.*
-
-import java.util.HashMap
+import org.json.JSONObject
+import java.util.*
 
 class ProfileInformationActivity : AppCompatActivity() {
     lateinit var name: TextView
     lateinit var email: TextView
     lateinit var address: TextView
     lateinit var userType: TextView
-    lateinit var usernameField: TextView
-    lateinit var emailIdField: TextView
-    lateinit var addressField: TextView
-    lateinit var usertypeField: TextView
-    private var infoContainer: RelativeLayout? = null
     private var auth: FirebaseAuth? = null
     private var reference: DatabaseReference? = null
     private var mauthListener: FirebaseAuth.AuthStateListener? = null
     internal lateinit var mProcessDialog: ProgressDialog
+    private var progressBar:ProgressBar? = null
     private var srcUri: Uri? = null
     private var mProfileImage: ImageView? = null
     private var mStorageRefernce: StorageReference? = null
@@ -66,7 +54,8 @@ class ProfileInformationActivity : AppCompatActivity() {
     private lateinit var uploadTask: StorageTask<UploadTask.TaskSnapshot>
     private var typeface: Typeface? = null
     lateinit var drawerLayout: DrawerLayout
-    lateinit var toolbarIcon: ImageView
+    lateinit var settingImage: ImageView
+    private var mainContainer: RelativeLayout? = null
 
 
     override fun onStart() {
@@ -78,35 +67,18 @@ class ProfileInformationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_information)
-        val mainLayout: LinearLayout = findViewById(R.id.main_content)
-        toolbarIcon = findViewById(R.id.toolbar_logo)
+        mainContainer = findViewById(R.id.main_content)
+        settingImage = findViewById(R.id.setting_imageview)
+        progressBar = findViewById(R.id.progressbar)
+        progressBar!!.apply {
+            visibility = View.VISIBLE
+        }
 
         setUpDrawer()
         setUPToolbar()
-//        val imageView = ImageView(actionBar!!.themedContext)
-//        imageView.apply {
-//            scaleType.apply { ImageView.ScaleType.CENTER }
-//            setImageResource(R.mipmap.fb_main_launcher)
-//
-//        }
-//        val layoutParams = ActionBar.LayoutParams(
-//                ActionBar.LayoutParams.WRAP_CONTENT,
-//                ActionBar.LayoutParams.WRAP_CONTENT, (Gravity.END or Gravity.CENTER_VERTICAL))
-//        layoutParams.rightMargin = 40
-//        imageView.layoutParams = layoutParams
-//        actionBar.customView = imageView
-
-        usernameField = findViewById(R.id.username_field)
-        emailIdField = findViewById(R.id.email_id_field)
-        addressField = findViewById(R.id.address_field)
-        usertypeField = findViewById(R.id.designation_field)
+        fetchData()
         typeface = Typeface.createFromAsset(assets, "Raleway-Medium.ttf")
         drawerLayout = findViewById(R.id.drawer_layout)
-        usernameField.typeface = typeface
-        emailIdField.typeface = typeface
-        addressField.typeface = typeface
-        usertypeField.typeface = typeface
-
         name = findViewById(R.id.PI_name)
         email = findViewById(R.id.PI_email)
         email.movementMethod = ScrollingMovementMethod()
@@ -118,10 +90,7 @@ class ProfileInformationActivity : AppCompatActivity() {
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent, SELECT_PHOTO)
         }
-        infoContainer = findViewById(R.id.data_container)
-        mProcessDialog = ProgressDialog(this)
-        mProcessDialog.setMessage("Loading User Info......")
-        mProcessDialog.setCancelable(false)
+
 
         auth = FirebaseAuth.getInstance()
         Log.d("Tag", "user" + auth!!)
@@ -131,7 +100,7 @@ class ProfileInformationActivity : AppCompatActivity() {
             if (auth!!.currentUser != null) {
                 try {
                     mProcessDialog.show()
-                } catch (e: Exception) {
+                } catch (ee: Exception) {
 
                 }
 
@@ -163,9 +132,12 @@ class ProfileInformationActivity : AppCompatActivity() {
                                             val editor = preferences.edit()
                                             editor.putString("role", UserType)
                                             editor.apply()
-                                            mProcessDialog.dismiss()
+                                            mainContainer?.visibility = View.VISIBLE
+                                            progressBar?.visibility = View.GONE
                                         } else {
-                                            mProcessDialog.dismiss()
+
+                                            mainContainer?.visibility = View.VISIBLE
+                                            progressBar?.visibility = View.GONE
 
                                         }
 
@@ -173,13 +145,25 @@ class ProfileInformationActivity : AppCompatActivity() {
 
                                     override fun onCancelled(databaseError: DatabaseError) {
                                         Toast.makeText(applicationContext, "Error in Fetching$databaseError", Toast.LENGTH_LONG).show()
-                                        mProcessDialog.dismiss()
+                                        progressBar?.visibility = View.GONE
                                     }
                                 })
 
 
             }
         }
+    }
+
+    private fun fetchData() {
+        val queue = Volley.newRequestQueue(this)
+        val url = "https://allsportsapi.com/api/football/?met=Leagues&APIkey=b22781aea4588f441ff115ea5b79d27ae2d3226304dba8ca9a16ec390d3f1dd2&countryId=134"
+        val stringRequest = StringRequest(Request.Method.GET, url, com.android.volley.Response.Listener { response ->
+            val strRespone = response.toString()
+            val jsonObject = JSONObject(strRespone)
+            val jsonArray = jsonObject.getJSONArray("result")
+
+        }, com.android.volley.Response.ErrorListener { })
+        queue!!.add(stringRequest)
     }
 
     private fun setUPToolbar() {
@@ -209,36 +193,38 @@ class ProfileInformationActivity : AppCompatActivity() {
                 R.id.change_password -> {
 
                 }
-                R.id.list_of_users -> {
+                R.id.weather_forecast -> {
+                    navDrawerLayout.closeDrawers()
                     startActivity(Intent(this@ProfileInformationActivity, ListUserMainActivity::class.java))
+                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
                 }
             }
-            navDrawerLayout.closeDrawers()
+
             return@setNavigationItemSelectedListener true
         }
         val actionBarDrawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this, navDrawerLayout, toolbar, R.string.open, R.string.close) {
-            override fun onDrawerSlide(drawerView: View?, slideOffset: Float) {
-                val slideX = drawerView!!.width * slideOffset
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                val slideX = drawerView.width * slideOffset
                 main_content.translationX = -slideX
                 super.onDrawerSlide(drawerView, slideOffset)
             }
         }
         navDrawerLayout.addDrawerListener(actionBarDrawerToggle)
-        toolbarIcon.setOnClickListener {
-            if (drawerLayout.isDrawerOpen(Gravity.END)) {
-                drawerLayout.closeDrawer(Gravity.END)
+        settingImage.setOnClickListener {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END)
             } else {
-                drawerLayout.openDrawer(Gravity.END)
+                drawerLayout.openDrawer(GravityCompat.END)
             }
         }
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            SELECT_PHOTO -> if (resultCode == Activity.RESULT_OK) {
-                srcUri = data.data
+            SELECT_PHOTO -> if (resultCode == AppCompatActivity.RESULT_OK) {
+                srcUri = data!!.data
                 Log.d("tag", "here" + srcUri!!)
                 Toast.makeText(this, "File Path :" + srcUri!!.path!!, Toast.LENGTH_LONG).show()
                 val filepath = mStorageRefernce!!.child("Photos").child(srcUri!!.lastPathSegment!!)
@@ -255,7 +241,7 @@ class ProfileInformationActivity : AppCompatActivity() {
                     mProcessDialog.incrementProgressBy(progress.toInt())
                 }
                 uploadTask.addOnFailureListener { Toast.makeText(this@ProfileInformationActivity, "Failure", Toast.LENGTH_SHORT).show() }.addOnSuccessListener { taskSnapshot ->
-                    val downloadUri = taskSnapshot.downloadUrl
+                    val downloadUri = taskSnapshot.uploadSessionUri
                     Toast.makeText(applicationContext, "Successfully Saved in Storage", Toast.LENGTH_SHORT).show()
                     Glide.with(this@ProfileInformationActivity)
                             .load(downloadUri)
@@ -270,6 +256,7 @@ class ProfileInformationActivity : AppCompatActivity() {
                     reference.updateChildren(userImage)
 
                     mProcessDialog.dismiss()
+                    mainContainer?.visibility = View.VISIBLE
                 }
 
 
@@ -327,10 +314,10 @@ class ProfileInformationActivity : AppCompatActivity() {
         } else
             when (item.itemId) {
                 android.R.id.home -> {
-                    if (drawerLayout.isDrawerOpen(Gravity.END)) {
-                        drawerLayout.closeDrawer(Gravity.END)
+                    if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                        drawerLayout.closeDrawer(GravityCompat.END)
                     } else {
-                        drawerLayout.openDrawer(Gravity.END)
+                        drawerLayout.openDrawer(GravityCompat.END)
                     }
                     return true
 

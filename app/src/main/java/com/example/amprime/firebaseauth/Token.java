@@ -1,7 +1,7 @@
 package com.example.amprime.firebaseauth;
 
-import com.example.amprime.firebaseauth.Retrofit.APIService;
-import com.example.amprime.firebaseauth.Retrofit.RetrofitClient;
+import com.example.amprime.firebaseauth.retrofit.APIService;
+import com.example.amprime.firebaseauth.retrofit.RetrofitClient;
 
 /**
  * Created by amprime on 11/11/17.
@@ -14,6 +14,6 @@ public class Token {
 
     public static APIService getFCMClient(){
 
-        return RetrofitClient.getRetrofit(baseUrl).create(APIService.class);
+        return RetrofitClient.INSTANCE.getRetrofit(baseUrl).create(APIService.class);
     }
 }

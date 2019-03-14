@@ -17,9 +17,9 @@
     </item>
 
     <item
-        android:id="@+id/list_of_users"
-        android:title="Users List"
-        android:icon="@drawable/push_notification"
+        android:id="@+id/weather_forecast"
+        android:title="Weather Forecast"
+        android:icon="@drawable/sun"
         app:showAsAction="never">
 
     </item>

@@ -8,11 +8,11 @@
     tools:showIn="@layout/activity_list_user"
     android:padding="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_user_recycler_view"
         >
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

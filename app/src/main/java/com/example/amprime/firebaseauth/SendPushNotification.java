@@ -1,18 +1,12 @@
 package com.example.amprime.firebaseauth;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.amprime.firebaseauth.Adapter.UserAdapter;
-import com.example.amprime.firebaseauth.Retrofit.APIService;
+import com.example.amprime.firebaseauth.retrofit.APIService;
 import com.example.amprime.firebaseauth.model.MyResponse;
 import com.example.amprime.firebaseauth.model.Notification;
 import com.example.amprime.firebaseauth.model.Sender;
-import com.example.amprime.firebaseauth.model.User;
-import com.example.amprime.firebaseauth.model.UserInformation;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

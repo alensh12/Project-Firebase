@@ -1,35 +1,26 @@
 package com.example.amprime.firebaseauth;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.InputType;
-import android.text.TextUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.support.v7.view.ActionMode;
+import androidx.appcompat.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.amprime.firebaseauth.Adapter.UserAdapter;
-import com.example.amprime.firebaseauth.Helper.SimpleDividerItemDecoration;
+import com.example.amprime.firebaseauth.adapter.UserAdapter;
+import com.example.amprime.firebaseauth.helper.SimpleDividerItemDecoration;
 import com.example.amprime.firebaseauth.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -370,7 +361,7 @@ public class ListUser extends AppCompatActivity implements UserAdapter.MessageAd
     private void updateUser(int position, String userDesignation) {
 
         User user = (User) entries.get(position);
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(user.uid);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         Log.d("TAG", String.valueOf(reference));
         Map<String, Object> users = new HashMap<>();
         users.put("userType",userDesignation);
