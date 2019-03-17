@@ -8,9 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.TextDelegate
 
 class SplashScreen : AppCompatActivity() {
-   var imageView: ImageView? = null
+    var imageView: ImageView? = null
+    var lotteAnimationView: LottieAnimationView? = null
+    private var textDelegate: TextDelegate? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         setContentView(R.layout.activity_splash)
@@ -18,15 +22,16 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+
     private fun scheduleSplashScreen() {
 
 
         imageView = findViewById(R.id.imageView)
-        val animShake: Animation = AnimationUtils.loadAnimation(this.applicationContext, R.anim.shake_animation)
-        imageView?.startAnimation(animShake)
+        lotteAnimationView = findViewById(R.id.animationView)
+
         val splashScreenDuration = getSplashDuration()
         Handler().postDelayed({
-//            imageView.clearAnimation()
+            //            imageView.clearAnimation()
             startActivity(Intent(this@SplashScreen, EmailAndPasswordActivity::class.java))
         }, splashScreenDuration)
 

@@ -78,31 +78,12 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
         usernameText = findViewById(R.id.userField);
         passwordText = findViewById(R.id.passwordField);
         SignInButton = findViewById(R.id.sign_in_button);
-        RegisterUserButton = findViewById(R.id.register_user_button);
+
 
         forgotPasswordText = findViewById(R.id.forgot_password_text);
-        SignInSignOut = findViewById(R.id.sign_in_sign_out);
+
         SignInButton.setOnClickListener(this);
-        RegisterUserButton.setOnClickListener(this);
-        forgotPasswordText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                        Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
-                        startActivity(intent);
-
-            }
-        });
-
-
-        googleImage = findViewById(R.id.google_login);
-        googleImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             Toast.makeText(getApplicationContext(),"Activity under construction",Toast.LENGTH_SHORT).show();
-            }
-        });
-        fbImage = findViewById(R.id.fb_login);
 
 
 
@@ -152,8 +133,8 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    SignInSignOut.setText("Successfully Signed In");
-                                    SignInSignOut.setTextColor(Color.GREEN);
+//                                    SignInSignOut.setText("Successfully Signed In");
+//                                    SignInSignOut.setTextColor(Color.GREEN);
                                     progressDialog.dismiss();
                                     startActivity(new Intent(getApplicationContext(), ProfileInformationActivity.class));
                                     FirebaseUser user = mAuth.getCurrentUser();
@@ -170,8 +151,8 @@ public class EmailAndPasswordActivity extends AppCompatActivity implements View.
                                     else{
 
                                     //startActivity(new Intent(getApplicationContext(), EmailAndPasswordActivity.class));
-                                    SignInSignOut.setText("Failed");
-                                    SignInSignOut.setTextColor(Color.RED);
+//                                    SignInSignOut.setText("Failed");
+//                                    SignInSignOut.setTextColor(Color.RED);
                                     Log.w("TAG", "signInWithEmail:failed", task.getException());
                                     Toast.makeText(EmailAndPasswordActivity.this, "Incorrect Password/Username",
                                             Toast.LENGTH_SHORT).show();

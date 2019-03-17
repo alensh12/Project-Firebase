@@ -184,14 +184,14 @@ class ProfileInformationActivity : AppCompatActivity() {
         val navView = findViewById<NavigationView>(R.id.nav_view)
         navView.setNavigationItemSelectedListener { it ->
             when (it.itemId) {
-                R.id.log_out_profile -> {
-                    Log.e("menu", "Logout")
+                R.id.lotte -> {
+                   startActivity(Intent(this,AnimationActivity::class.java))
                 }
                 R.id.edit_user_information -> {
 
                 }
                 R.id.change_password -> {
-
+                    startActivity(Intent(this, CryptoCurrencyActivity::class.java))
                 }
                 R.id.weather_forecast -> {
                     navDrawerLayout.closeDrawers()

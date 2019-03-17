@@ -1,15 +1,12 @@
 package com.example.amprime.firebaseauth.adapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.amprime.firebaseauth.R
 import com.example.amprime.firebaseauth.model.Players
-import kotlinx.android.synthetic.main.layout_player_list.view.*
 
 class PlayerAdapter(private var context: Context, private var arrayList: ArrayList<Players>) : androidx.recyclerview.widget.RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
 

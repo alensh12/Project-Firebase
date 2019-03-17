@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/log_out_profile"
-        android:title="Log out"
+        android:id="@+id/lotte"
+        android:title="Lotte"
         android:icon="@drawable/push_notification"
         app:showAsAction="never">
 

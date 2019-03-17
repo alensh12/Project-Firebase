@@ -1,11 +1,10 @@
 package com.example.amprime.firebaseauth.webservice
 
-import com.example.amprime.firebaseauth.model.BbcSportsNewModel
-import com.example.amprime.firebaseauth.model.CountryFootballModel
-import com.example.amprime.firebaseauth.model.TeamListModel
-import com.example.amprime.firebaseauth.model.WeatherModel
+import com.example.amprime.firebaseauth.model.*
 import retrofit2.Call
 import retrofit2.http.*
+import rx.Observable
+import java.util.*
 
 class WebService {
     interface WeatherWebService {
@@ -38,5 +37,9 @@ class WebService {
                 @Query("sources") source:String,
                 @Query("apiKey") apiKey: String
         ):Call<BbcSportsNewModel>
+    }
+    interface CryptoService{
+        @GET("/data/all/coinlist")
+        fun getCoinList():io.reactivex.Observable<CoinList>
     }
 }
