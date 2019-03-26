@@ -14,11 +14,11 @@ class CryptoPresenter(var cryptoViewInterface: CryptoViewInterface) : CryptoPres
 
 
     override fun getCoins() {
-       getOservable()?.subscribe(getDisposable())
+       getObservable()?.subscribe(getDisposable())
 
     }
 
-    private fun getOservable(): Observable<CoinList>? {
+    private fun getObservable(): Observable<CoinList>? {
         return CrypoCompareApi.getClient()!!.create(WebService.CryptoService::class.java).getCoinList().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
     }
 

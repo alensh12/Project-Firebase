@@ -1,64 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/country_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
-
-        <Spinner
-            android:id="@+id/league_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
-
-        <Spinner
-            android:id="@+id/team_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
-
-        <Button
-            android:id="@+id/view_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Detail" />
-    <com.airbnb.lottie.samples.views.InterceptingFrameLayout
-        android:id="@+id/containerView"
+    <Spinner
+        android:id="@+id/country_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animationView"
-            android:layout_width="256dp"
-            android:layout_height="256dp"
-            app:lottie_url="https://raw.githubusercontent.com/airbnb/lottie-android/master/LottieSample/src/main/res/raw/bullseye.json"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:layout_gravity="center"/>
+    <Spinner
+        android:id="@+id/league_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp" />
 
-        <com.airbnb.lottie.samples.views.BackgroundColorView
-            android:id="@+id/targetView"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:background="#00ddff"
-            android:layout_gravity="center"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:text="Here"
-            android:textColor="#000000"/>
+    <Button
+        android:id="@+id/view_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Detail" />
 
-    </com.airbnb.lottie.samples.views.InterceptingFrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/football_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    </LinearLayout>
+
+</LinearLayout>

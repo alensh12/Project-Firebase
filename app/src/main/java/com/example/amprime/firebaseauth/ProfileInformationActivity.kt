@@ -20,6 +20,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.airbnb.lottie.LottieAnimationView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -46,7 +47,7 @@ class ProfileInformationActivity : AppCompatActivity() {
     private var reference: DatabaseReference? = null
     private var mauthListener: FirebaseAuth.AuthStateListener? = null
     internal lateinit var mProcessDialog: ProgressDialog
-    private var progressBar:ProgressBar? = null
+    private var progressBar:LottieAnimationView? = null
     private var srcUri: Uri? = null
     private var mProfileImage: ImageView? = null
     private var mStorageRefernce: StorageReference? = null
@@ -56,6 +57,7 @@ class ProfileInformationActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var settingImage: ImageView
     private var mainContainer: RelativeLayout? = null
+    private var lottieLayout:RelativeLayout? = null
 
 
     override fun onStart() {
@@ -69,8 +71,9 @@ class ProfileInformationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile_information)
         mainContainer = findViewById(R.id.main_content)
         settingImage = findViewById(R.id.setting_imageview)
-        progressBar = findViewById(R.id.progressbar)
-        progressBar!!.apply {
+        progressBar = findViewById(R.id.lottie_view)
+        lottieLayout  = findViewById(R.id.lottie_layout)
+        lottieLayout?.apply {
             visibility = View.VISIBLE
         }
 
@@ -133,11 +136,11 @@ class ProfileInformationActivity : AppCompatActivity() {
                                             editor.putString("role", UserType)
                                             editor.apply()
                                             mainContainer?.visibility = View.VISIBLE
-                                            progressBar?.visibility = View.GONE
+                                            lottieLayout?.visibility = View.GONE
                                         } else {
 
                                             mainContainer?.visibility = View.VISIBLE
-                                            progressBar?.visibility = View.GONE
+                                            lottieLayout?.visibility = View.GONE
 
                                         }
 
@@ -145,7 +148,7 @@ class ProfileInformationActivity : AppCompatActivity() {
 
                                     override fun onCancelled(databaseError: DatabaseError) {
                                         Toast.makeText(applicationContext, "Error in Fetching$databaseError", Toast.LENGTH_LONG).show()
-                                        progressBar?.visibility = View.GONE
+                                        lottieLayout?.visibility = View.GONE
                                     }
                                 })
 

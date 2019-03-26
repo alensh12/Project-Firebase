@@ -3,7 +3,7 @@ package com.example.amprime.firebaseauth.services;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.amprime.firebaseauth.Token;
+import com.example.amprime.firebaseauth.helper.Token;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 

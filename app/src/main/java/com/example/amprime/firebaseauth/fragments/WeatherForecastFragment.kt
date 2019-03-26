@@ -47,11 +47,6 @@ class WeatherForecastFragment : Fragment() {
         fun newInstance(): WeatherForecastFragment = WeatherForecastFragment()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        fetchWeatherdata("kathmandu")
-    }
-
     private fun fetchWeatherdata(city: String) {
         retrofit = Retrofit.Builder()
                 .baseUrl(Constant.BASE_URL)

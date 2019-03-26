@@ -19,26 +19,16 @@
         android:fontFamily="sans-serif-thin"
         />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_above="@id/txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/icon_firebase"
-        />
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView"
-        android:layout_width="256dp"
-        android:layout_height="256dp"
-        app:lottie_url="https://raw.githubusercontent.com/airbnb/lottie-android/master/LottieSample/src/main/res/raw/bullseye.json"
+        android:id="@+id/animation_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_colorFilter="@color/colorAccent"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_below="@+id/txt"/>
+        app:lottie_rawRes="@raw/preloader"
+        android:layout_above="@id/txt"/>
 
 
 </RelativeLayout>

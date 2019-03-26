@@ -1,4 +1,4 @@
-package com.example.amprime.firebaseauth;
+package com.example.amprime.firebaseauth.helper;
 
 import com.example.amprime.firebaseauth.retrofit.APIService;
 import com.example.amprime.firebaseauth.retrofit.RetrofitClient;

@@ -3,9 +3,11 @@ package com.example.amprime.firebaseauth;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.amprime.firebaseauth.helper.TeamDataProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +29,8 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
     EditText changePassword, reChangePassword;
     Button changeButton;
     private FirebaseAuth auth;
+    Intent intent;
+    TeamDataProvider teamDataProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,10 +42,13 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
         changeButton = findViewById(R.id.change_password_button);
 
         changeButton.setOnClickListener(this);
-        SharedPreferences preferences = getSharedPreferences("my_pref",MODE_PRIVATE);
-        String role = preferences.getString("role","");
-        Log.d("Role: ",role);
-
+        SharedPreferences preferences = getSharedPreferences("my_pref", MODE_PRIVATE);
+        String role = preferences.getString("role", "");
+        Log.d("Role: ", role);
+        intent = getIntent();
+        String key = intent.getStringExtra("key");
+        teamDataProvider = new TeamDataProvider();
+        Log.e("TeamDataProvider", teamDataProvider.toString());
 
     }
 
@@ -63,11 +71,9 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
         } else if (TextUtils.isEmpty(rcPassword)) {
             reChangePassword.setError("Empty");
 
-        }
-        else if(!isPasswordEnough(cPassword)){
+        } else if (!isPasswordEnough(cPassword)) {
             changePassword.setError("Not Enough Character");
-        }
-        else {
+        } else {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
                 user.updatePassword(changePassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -76,8 +82,8 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
 
                             Toast.makeText(ChangePassword.this, "Password changed", Toast.LENGTH_SHORT).show();
-                           // auth.signOut();
-                          //   finish();
+                            // auth.signOut();
+                            //   finish();
                             startActivity(new Intent(getApplicationContext(), EmailAndPasswordActivity.class));
                         }
                         if (!task.isSuccessful()) {
@@ -93,6 +99,10 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
     }
 
     private boolean isPasswordEnough(String cPassword) {
-        return cPassword.length()>5;
+        return cPassword.length() > 5;
+    }
+
+    public TeamDataProvider getDataProvider() {
+        return teamDataProvider;
     }
 }

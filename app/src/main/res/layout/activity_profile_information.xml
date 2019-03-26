@@ -10,10 +10,22 @@
     android:theme="@style/ThemeOverlay.ProfileInformationText"
     tools:context="com.example.amprime.firebaseauth.ProfileInformationActivity">
 
-    <include
-        android:id="@+id/progress_bar"
-        layout="@layout/progress_bar"
-        android:visibility="visible"/>
+ <RelativeLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:id="@+id/lottie_layout"
+     android:visibility="visible">
+     <com.airbnb.lottie.LottieAnimationView
+         android:id="@+id/lottie_view"
+         android:layout_width="100dp"
+         android:layout_height="100dp"
+         android:layout_gravity="center"
+         android:layout_centerInParent="true"
+         app:lottie_autoPlay="true"
+         app:lottie_loop="true"
+         app:lottie_rawRes="@raw/loading"
+         android:layout_above="@id/txt"/>
+ </RelativeLayout>
 
     <RelativeLayout
 
@@ -280,6 +292,5 @@
         app:itemIconTint="@color/colorAccent"
         app:itemTextColor="@color/colorAccent"
         app:menu="@menu/profile_information_menu" />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
